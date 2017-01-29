@@ -66,7 +66,7 @@ public class kat {
 //            System.out.println("MSG: " + Msg.toString());
 
             //HASH
-//            MD = algorithm.Hash(hashbitlen, Integer.valueOf(line), this);
+            MD = algorithm.Hash(hashbitlen, Integer.valueOf(line), this);
 
             io.writeToFile("\nLen = %s\n", line);
             io.writeBToFile("Msg = ", Msg, msgbytelen);
