@@ -141,8 +141,8 @@ public class kat {
     }
 
     public static void main(String[] args) {
-        System.err.println("=== Start ====================================");
+        System.err.println("=== Start ===================================");
         new kat();
-        System.err.println("=== Done =====================================");
+        System.err.println("=== Done ====================================");
     }
 }
