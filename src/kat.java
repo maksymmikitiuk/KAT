@@ -1,7 +1,4 @@
 public class kat {
-    private static final int MAX_MARKER_LEN = 50;
-    private static final int SUBMITTER_INFO_LEN = 128;
-
     public kat() {
         STATUS_CODES ret_val;
         int bitlens[] = {224, 256, 384, 512};
@@ -19,18 +16,18 @@ public class kat {
     private STATUS_CODES genShortMsg(int hashbitlen) {
         algorithm algorithm = new algorithm();
         String line = null;
-        char Msg[] = new char[256];
-        char MD[] = new char[64];
+        int Msg[] = new int[256];
+        int MD[] = new int[64];
         int msgbytelen;
         boolean done;
         ioFile io = new ioFile();
         String fileName = String.format("ShortMsgKAT_%d.txt", hashbitlen);
 
-        if (!io.setPathRead("D:\\Java\\KAT-master\\input\\ShortMsgKAT.txt")) {
+        if (!io.setPathRead("F:\\Java\\KAT-master\\input\\ShortMsgKAT.txt")) {
             return STATUS_CODES.KAT_FILE_OPEN_ERROR;
         }
 
-        if (!io.setPathWrite("D:\\Java\\KAT-master\\output\\" + fileName)) {
+        if (!io.setPathWrite("F:\\Java\\KAT-master\\output\\" + fileName)) {
             return STATUS_CODES.KAT_FILE_OPEN_ERROR;
         }
 
@@ -45,7 +42,7 @@ public class kat {
         if ((line = io.find("# Principal Submitter:")) != null) {
             io.writeToFile("# Principal Submitter:%s\n", line);
         } else {
-            System.out.println("enShortMsg: Couldn't read Principal Submitter\n");
+            System.out.println("genShortMsg: Couldn't read Principal Submitter\n");
             return STATUS_CODES.KAT_HEADER_ERROR;
         }
 
@@ -55,6 +52,7 @@ public class kat {
                 done = true;
                 break;
             }
+
             msgbytelen = (Integer.parseInt(line) + 7) / 8;
 
             Msg = io.ReadHEX(256, msgbytelen, "Msg = ");
@@ -82,18 +80,18 @@ public class kat {
     private STATUS_CODES genLongMsg(int hashbitlen) {
         algorithm algorithm = new algorithm();
         String line = null;
-        char Msg[] = new char[4288];
-        char MD[] = new char[64];
+        int Msg[] = new int[4288];
+        int MD[] = new int[64];
         int msgbytelen;
         boolean done;
         ioFile io = new ioFile();
         String fileName = String.format("LongMsgKAT_%d.txt", hashbitlen);
 
-        if (!io.setPathRead("D:\\Java\\KAT-master\\input\\LongMsgKAT.txt")) {
+        if (!io.setPathRead("F:\\Java\\KAT-master\\input\\LongMsgKAT.txt")) {
             return STATUS_CODES.KAT_FILE_OPEN_ERROR;
         }
 
-        if (!io.setPathWrite("D:\\Java\\KAT-master\\output\\" + fileName)) {
+        if (!io.setPathWrite("F:\\Java\\KAT-master\\output\\" + fileName)) {
             return STATUS_CODES.KAT_FILE_OPEN_ERROR;
         }
 
