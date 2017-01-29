@@ -61,7 +61,10 @@ public class kat {
                 return STATUS_CODES.KAT_DATA_ERROR;
             }
 
-//            System.out.println("MSG: " + Msg.toString());
+            for (int x: Msg) {
+                System.out.print(x + " ");
+            }
+            System.out.println("\n");
 
             //HASH
             MD = algorithm.Hash(hashbitlen, Integer.valueOf(line), this);

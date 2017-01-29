@@ -20,7 +20,7 @@ public class algorithm {
 //        System.out.println("m: " + m);
         int masked_value = value & m;
 //        System.out.println("masked_value: " + masked_value);
-        return value;
+        return masked_value;
     }
 
 }
