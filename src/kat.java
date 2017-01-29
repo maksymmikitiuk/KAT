@@ -17,6 +17,7 @@ public class kat {
     }
 
     private STATUS_CODES genShortMsg(int hashbitlen) {
+        algorithm algorithm = new algorithm();
         String line = null;
         char Msg[] = new char[256];
         char MD[] = new char[64];
@@ -61,7 +62,7 @@ public class kat {
                 return STATUS_CODES.KAT_DATA_ERROR;
             }
 
-            //HASH
+            algorithm.Hash(hashbitlen, Integer.valueOf(line), this);
 
             io.writeToFile("\nLen = %s\n", line);
             io.writeBToFile("Msg = ", Msg, msgbytelen);
@@ -75,8 +76,9 @@ public class kat {
     }
 
     private STATUS_CODES genLongMsg(int hashbitlen) {
+        algorithm algorithm = new algorithm();
         String line = null;
-        char Msg[] = new char[256];
+        char Msg[] = new char[4228];
         char MD[] = new char[64];
         int msgbytelen;
         boolean done;
@@ -115,17 +117,17 @@ public class kat {
             msgbytelen = (Integer.parseInt(line) + 7) / 8;
 
             if(!io.ReadHEX(Msg, msgbytelen, "Msg = ")){
-                System.out.println("ERROR: unable to read 'Msg' from <ShortMsgKAT.txt>");
+                System.out.println("ERROR: unable to read 'Msg' from <LongMsgKAT.txt>");
                 return STATUS_CODES.KAT_DATA_ERROR;
             }
 
-            //HASH
+            algorithm.Hash(hashbitlen, Integer.valueOf(line), this);
 
             io.writeToFile("\nLen = %s\n", line);
             io.writeBToFile("Msg = ", Msg, msgbytelen);
             io.writeBToFile("MD = ", MD, hashbitlen/8);
         } while (!done);
-        System.out.println(String.format("finished ShortMsgKAT for <%d>\n", hashbitlen));
+        System.out.println(String.format("finished LongtMsgKAT for <%d>\n", hashbitlen));
 
         io.closeFiles();
 
