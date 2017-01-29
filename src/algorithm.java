@@ -17,9 +17,9 @@ public class algorithm {
         String repeated_0 = new String(new char[8-bitlen]).replace("\0", "0");
         String mask = repeated_1 + repeated_0;
         int m = Integer.parseInt(mask, 2);
-        System.out.println("m: " + m);
+//        System.out.println("m: " + m);
         int masked_value = value & m;
-        System.out.println("masked_value: " + masked_value);
+//        System.out.println("masked_value: " + masked_value);
         return value;
     }
 
