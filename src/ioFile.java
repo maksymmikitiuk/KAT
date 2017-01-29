@@ -74,12 +74,11 @@ public class ioFile {
         }
     }
 
-    public void writeBToFile(String line, String param, int L) {
+    public void writeBToFile(String line, char[] A, int L) {
         writeToFile("%s", line);
-        char A[] = param.toCharArray();
 
         for (int i = 0; i < L; i++)
-            writeToFile("%02X", A[i]);
+            writeToFile("%02X", (byte)A[i]);
 
         if (L == 0)
             writeToFile("00", "");
@@ -87,11 +86,10 @@ public class ioFile {
         writeToFile("\n", "");
     }
 
-    public boolean ReadHEX(String s, int Length, String str) {
+    public boolean ReadHEX(char[] A, int Length, String str) {
         int ch;
         boolean started;
         char ich = 0;
-        char A[] = s.toCharArray();
 
         if (Length == 0) {
             A[0] = 0x00;
