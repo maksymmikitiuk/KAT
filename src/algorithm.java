@@ -2,13 +2,12 @@ import java.util.BitSet;
 
 public class algorithm {
 
-    char Msg[] = new char[256];
+    int Msg[] = new int[256];
 
     public algorithm() {
     }
 
-    public char[] Hash(int hashbitlen, int msglen, Object o){
-        Msg = "abcde".toCharArray();
+    public int[] Hash(int hashbitlen, int msglen, Object o){
         ZerroFill(160, 2);
         return Msg;
     }
