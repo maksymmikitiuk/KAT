@@ -120,7 +120,7 @@ public class ioFile {
                     ich = (char) (ch - 'A' + 10);
                 else if ((ch >= 'a') && (ch <= 'f'))
                     ich = (char) (ch - 'a' + 10);
-                System.out.println("ch: " + ch + " ich: " + ich);
+//                System.out.println("ch: " + ch + " ich: " + ich);
 
 
                 for (int i = 0; i < Length - 1; i++)

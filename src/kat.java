@@ -26,11 +26,11 @@ public class kat {
         ioFile io = new ioFile();
         String fileName = String.format("ShortMsgKAT_%d.txt", hashbitlen);
 
-        if (!io.setPathRead("D:\\Java\\KAT-master\\input\\ShortMsgKAT.txt")) {
+        if (!io.setPathRead("F:\\Java\\KAT-master\\input\\ShortMsgKAT.txt")) {
             return STATUS_CODES.KAT_FILE_OPEN_ERROR;
         }
 
-        if (!io.setPathWrite("D:\\Java\\KAT-master\\output\\" + fileName)) {
+        if (!io.setPathWrite("F:\\Java\\KAT-master\\output\\" + fileName)) {
             return STATUS_CODES.KAT_FILE_OPEN_ERROR;
         }
 
@@ -63,7 +63,7 @@ public class kat {
                 return STATUS_CODES.KAT_DATA_ERROR;
             }
 
-            System.out.println("MSG: " + Msg.toString());
+//            System.out.println("MSG: " + Msg.toString());
 
             //HASH
 //            MD = algorithm.Hash(hashbitlen, Integer.valueOf(line), this);
@@ -89,11 +89,11 @@ public class kat {
         ioFile io = new ioFile();
         String fileName = String.format("LongMsgKAT_%d.txt", hashbitlen);
 
-        if (!io.setPathRead("D:\\Java\\KAT-master\\input\\LongMsgKAT.txt")) {
+        if (!io.setPathRead("F:\\Java\\KAT-master\\input\\LongMsgKAT.txt")) {
             return STATUS_CODES.KAT_FILE_OPEN_ERROR;
         }
 
-        if (!io.setPathWrite("D:\\Java\\KAT-master\\output\\" + fileName)) {
+        if (!io.setPathWrite("F:\\Java\\KAT-master\\output\\" + fileName)) {
             return STATUS_CODES.KAT_FILE_OPEN_ERROR;
         }
 
