@@ -1,7 +1,7 @@
 public class algorithm {
 
     char Msg[] = new char[256];
-    
+
     public algorithm() {
     }
 

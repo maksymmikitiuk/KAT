@@ -8,7 +8,6 @@ public class ioFile {
 
     public static void main(String[] args) {
         //new ioFile("A:\\Java\\Java project\\hexTEST\\out\\production\\hexTEST\\ShortMsgKAT.txt", "").find("# Principal Submitter:");
-
     }
 
     public ioFile() {
@@ -78,7 +77,7 @@ public class ioFile {
         writeToFile("%s", line);
 
         for (int i = 0; i < L; i++)
-            writeToFile("%02X", (byte)A[i]);
+            writeToFile("%02X", (byte) A[i]);
 
         if (L == 0)
             writeToFile("00", "");
@@ -86,51 +85,50 @@ public class ioFile {
         writeToFile("\n", "");
     }
 
-    public boolean ReadHEX(char[] A, int Length, String str) {
-        int ch;
+    public char[] ReadHEX(int size, int Length, String str) {
+        char A[] = new char[size];
         boolean started;
         char ich = 0;
 
         if (Length == 0) {
             A[0] = 0x00;
-            return true;
+            return A;
         }
 
         Arrays.fill(A, 0, Length, (char) 0x00);
 
         started = false;
-        if (find(str) != null) {
-            try {
-                while ((ch = bufferedReader.read()) != -1) {
-                    if (!Character.isDigit(ch)) {
-                        if (!started) {
-                            if (ch == '\n')
-                                break;
-                            else
-                                continue;
-                        } else
-                            break;
-                    }
-                    started = true;
-                    if ((ch >= '0') && (ch <= '9'))
-                        ich = (char) (ch - '0');
-                    else if ((ch >= 'A') && (ch <= 'F'))
-                        ich = (char) (ch - 'A' + 10);
-                    else if ((ch >= 'a') && (ch <= 'f'))
-                        ich = (char) (ch - 'a' + 10);
 
-                    for (int i = 0; i < Length - 1; i++)
-                        A[i] = (char) ((A[i] << 4) | (A[i + 1] >> 4));
-                    A[Length - 1] = (char) ((A[Length - 1] << 4) | ich);
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
+        String line = null;
+
+        if ((line = find(str)) != null) {
+//                while ((ch = bufferedReader.read()) != -1) {
+            for (char ch : line.toCharArray()) {
+//                if (!Character.isDigit(ch)) {
+//                    if (!started) {
+//                        if (ch == '\n')
+//                            break;
+//                        else
+//                            continue;
+//                    } else
+//                        break;
+//                }
+                started = true;
+                if ((ch >= '0') && (ch <= '9'))
+                    ich = (char) (ch - '0');
+                else if ((ch >= 'A') && (ch <= 'F'))
+                    ich = (char) (ch - 'A' + 10);
+                else if ((ch >= 'a') && (ch <= 'f'))
+                    ich = (char) (ch - 'a' + 10);
+                System.out.println("ch: " + ch + " ich: " + ich);
+
+
+                for (int i = 0; i < Length - 1; i++)
+                    A[i] = (char) ((A[i] << 4) | (A[i + 1] >> 4));
+                A[Length - 1] = (char) ((A[Length - 1] << 4) | ich);
             }
-        } else {
-            return false;
         }
-        return true;
-
+        return A;
     }
 
     public boolean closeFiles() {

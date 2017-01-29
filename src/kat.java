@@ -8,8 +8,8 @@ public class kat {
 
         if ((ret_val = genShortMsg(bitlens[1])) != STATUS_CODES.KAT_SUCCESS)
             System.out.println(ret_val + " <" + ret_val.getCode() + ">");
-        if ((ret_val = genLongMsg(bitlens[1])) != STATUS_CODES.KAT_SUCCESS)
-            System.out.println(ret_val + " <" + ret_val.getCode() + ">");
+//        if ((ret_val = genLongMsg(bitlens[1])) != STATUS_CODES.KAT_SUCCESS)
+//            System.out.println(ret_val + " <" + ret_val.getCode() + ">");
 //        if ((ret_val = genExtremelyLongMsg(bitlens[1])) != STATUS_CODES.KAT_SUCCESS)
 //            System.out.println(ret_val + " <" + ret_val.getCode() + ">");
 //        if ((ret_val = genMonteCarlo(bitlens[1])) != STATUS_CODES.KAT_SUCCESS)
@@ -26,11 +26,11 @@ public class kat {
         ioFile io = new ioFile();
         String fileName = String.format("ShortMsgKAT_%d.txt", hashbitlen);
 
-        if (!io.setPathRead("B:/ShortMsgKAT.txt")) {
+        if (!io.setPathRead("D:\\Java\\KAT-master\\input\\ShortMsgKAT.txt")) {
             return STATUS_CODES.KAT_FILE_OPEN_ERROR;
         }
 
-        if (!io.setPathWrite("B:/" + fileName)) {
+        if (!io.setPathWrite("D:\\Java\\KAT-master\\output\\" + fileName)) {
             return STATUS_CODES.KAT_FILE_OPEN_ERROR;
         }
 
@@ -57,16 +57,20 @@ public class kat {
             }
             msgbytelen = (Integer.parseInt(line) + 7) / 8;
 
-            if(!io.ReadHEX(Msg, msgbytelen, "Msg = ")){
+            Msg = io.ReadHEX(256, msgbytelen, "Msg = ");
+            if (Msg.length == 0 || Msg == null) {
                 System.out.println("ERROR: unable to read 'Msg' from <ShortMsgKAT.txt>");
                 return STATUS_CODES.KAT_DATA_ERROR;
             }
 
-            algorithm.Hash(hashbitlen, Integer.valueOf(line), this);
+            System.out.println("MSG: " + Msg.toString());
+
+            //HASH
+//            MD = algorithm.Hash(hashbitlen, Integer.valueOf(line), this);
 
             io.writeToFile("\nLen = %s\n", line);
             io.writeBToFile("Msg = ", Msg, msgbytelen);
-            io.writeBToFile("MD = ", MD, hashbitlen/8);
+            io.writeBToFile("MD = ", MD, hashbitlen / 8);
         } while (!done);
         System.out.println(String.format("finished ShortMsgKAT for <%d>\n", hashbitlen));
 
@@ -78,18 +82,18 @@ public class kat {
     private STATUS_CODES genLongMsg(int hashbitlen) {
         algorithm algorithm = new algorithm();
         String line = null;
-        char Msg[] = new char[4228];
+        char Msg[] = new char[4288];
         char MD[] = new char[64];
         int msgbytelen;
         boolean done;
         ioFile io = new ioFile();
         String fileName = String.format("LongMsgKAT_%d.txt", hashbitlen);
 
-        if (!io.setPathRead("B:/LongMsgKAT.txt")) {
+        if (!io.setPathRead("D:\\Java\\KAT-master\\input\\LongMsgKAT.txt")) {
             return STATUS_CODES.KAT_FILE_OPEN_ERROR;
         }
 
-        if (!io.setPathWrite("B:/" + fileName)) {
+        if (!io.setPathWrite("D:\\Java\\KAT-master\\output\\" + fileName)) {
             return STATUS_CODES.KAT_FILE_OPEN_ERROR;
         }
 
@@ -116,18 +120,20 @@ public class kat {
             }
             msgbytelen = (Integer.parseInt(line) + 7) / 8;
 
-            if(!io.ReadHEX(Msg, msgbytelen, "Msg = ")){
-                System.out.println("ERROR: unable to read 'Msg' from <LongMsgKAT.txt>");
+            Msg = io.ReadHEX(4288, msgbytelen, "Msg = ");
+            if (Msg.length == 0 || Msg == null) {
+                System.out.println("ERROR: unable to read 'Msg' from <ShortMsgKAT.txt>");
                 return STATUS_CODES.KAT_DATA_ERROR;
             }
 
+            //HASH
             algorithm.Hash(hashbitlen, Integer.valueOf(line), this);
 
             io.writeToFile("\nLen = %s\n", line);
             io.writeBToFile("Msg = ", Msg, msgbytelen);
-            io.writeBToFile("MD = ", MD, hashbitlen/8);
+            io.writeBToFile("MD = ", MD, hashbitlen / 8);
         } while (!done);
-        System.out.println(String.format("finished LongtMsgKAT for <%d>\n", hashbitlen));
+        System.out.println(String.format("finished ShortMsgKAT for <%d>\n", hashbitlen));
 
         io.closeFiles();
 
@@ -135,6 +141,8 @@ public class kat {
     }
 
     public static void main(String[] args) {
+        System.err.println("=== Start ====================================");
         new kat();
+        System.err.println("=== Done =====================================");
     }
 }
