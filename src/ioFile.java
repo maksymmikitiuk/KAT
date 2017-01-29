@@ -73,7 +73,7 @@ public class ioFile {
         }
     }
 
-    public void writeBToFile(String line, char[] A, int L) {
+    public void writeBToFile(String line, int[] A, int L) {
         writeToFile("%s", line);
 
         for (int i = 0; i < L; i++)
@@ -85,10 +85,10 @@ public class ioFile {
         writeToFile("\n", "");
     }
 
-    public char[] ReadHEX(int size, int Length, String str) {
-        char A[] = new char[size];
-        boolean started;
-        char ich = 0;
+    public int[] ReadHEX(int size, int Length, String str) {
+        int A[] = new int[size];
+        String line = null;
+        int j = 0;
 
         if (Length == 0) {
             A[0] = 0x00;
@@ -97,37 +97,16 @@ public class ioFile {
 
         Arrays.fill(A, 0, Length, (char) 0x00);
 
-        started = false;
-
-        String line = null;
-
         if ((line = find(str)) != null) {
-//                while ((ch = bufferedReader.read()) != -1) {
-            for (char ch : line.toCharArray()) {
-//                if (!Character.isDigit(ch)) {
-//                    if (!started) {
-//                        if (ch == '\n')
-//                            break;
-//                        else
-//                            continue;
-//                    } else
-//                        break;
-//                }
-                started = true;
-                if ((ch >= '0') && (ch <= '9'))
-                    ich = (char) (ch - '0');
-                else if ((ch >= 'A') && (ch <= 'F'))
-                    ich = (char) (ch - 'A' + 10);
-                else if ((ch >= 'a') && (ch <= 'f'))
-                    ich = (char) (ch - 'a' + 10);
-//                System.out.println("ch: " + ch + " ich: " + ich);
 
+            char lineToChar[] = line.trim().toCharArray();
 
-                for (int i = 0; i < Length - 1; i++)
-                    A[i] = (char) ((A[i] << 4) | (A[i + 1] >> 4));
-                A[Length - 1] = (char) ((A[Length - 1] << 4) | ich);
+            for (int i = 0; i < lineToChar.length; i += 2) {
+                A[j] = Integer.parseInt("" + lineToChar[i] + lineToChar[i + 1], 16);
+                j++;
             }
         }
+
         return A;
     }
 
