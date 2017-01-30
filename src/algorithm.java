@@ -2,14 +2,27 @@ import java.util.BitSet;
 
 public class algorithm {
 
-    int Msg[] = new int[256];
+//    int Msg[] = new int[256];
 
     public algorithm() {
     }
 
-    public int[] Hash(int hashbitlen, int msglen, Object o){
+    public int[] Hash(int[] msg, int hashbitlen, int msglen, Object o){
         ZerroFill(160, 2);
-        return Msg;
+        System.out.println("hashbitlen: " + hashbitlen + "  msglen: " + msglen);
+        int wholeByte = msglen / 8;
+        int bitRemain = msglen % 8;
+        System.out.println("wholeByte: " + wholeByte + "  bitRemain: " + bitRemain);
+//        for (int x: msg) {
+//            System.out.print(x + " ");
+//        }
+//        System.out.println("\n");
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return msg;
     }
 
     public int ZerroFill(int value, int bitlen){

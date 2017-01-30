@@ -61,13 +61,13 @@ public class kat {
                 return STATUS_CODES.KAT_DATA_ERROR;
             }
 
-            for (int x: Msg) {
-                System.out.print(x + " ");
-            }
-            System.out.println("\n");
+//            for (int x: Msg) {
+//                System.out.print(x + " ");
+//            }
+//            System.out.println("\n");
 
             //HASH
-            MD = algorithm.Hash(hashbitlen, Integer.valueOf(line), this);
+            MD = algorithm.Hash(Msg, hashbitlen, Integer.valueOf(line), this);
 
             io.writeToFile("\nLen = %s\n", line);
             io.writeBToFile("Msg = ", Msg, msgbytelen);
@@ -128,7 +128,7 @@ public class kat {
             }
 
             //HASH
-            algorithm.Hash(hashbitlen, Integer.valueOf(line), this);
+            algorithm.Hash(Msg, hashbitlen, Integer.valueOf(line), this);
 
             io.writeToFile("\nLen = %s\n", line);
             io.writeBToFile("Msg = ", Msg, msgbytelen);
