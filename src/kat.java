@@ -23,11 +23,11 @@ public class kat {
         ioFile io = new ioFile();
         String fileName = String.format("ShortMsgKAT_%d.txt", hashbitlen);
 
-        if (!io.setPathRead("F:\\Java\\KAT-master\\input\\ShortMsgKAT.txt")) {
+        if (!io.setPathRead("d:\\Java\\KAT-master\\input\\ShortMsgKAT.txt")) {
             return STATUS_CODES.KAT_FILE_OPEN_ERROR;
         }
 
-        if (!io.setPathWrite("F:\\Java\\KAT-master\\output\\" + fileName)) {
+        if (!io.setPathWrite("d:\\Java\\KAT-master\\output\\" + fileName)) {
             return STATUS_CODES.KAT_FILE_OPEN_ERROR;
         }
 
