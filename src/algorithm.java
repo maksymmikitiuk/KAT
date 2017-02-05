@@ -1,27 +1,32 @@
-import java.util.Arrays;
-import java.util.BitSet;
+import org.apache.log4j.*;
 
 public class algorithm {
 
+    private static final Logger log = Logger.getLogger(algorithm.class.getName());
     int newMsg[] = new int[256];
 
     public algorithm() {
+
     }
 
     public int[] Hash(int[] msg, int hashbitlen, int msglen, Object o){
         int wholeByte = msglen / 8;
         int bitRemain = msglen % 8;
-        System.out.println("\n\nhashbitlen: " + hashbitlen + "  msglen: " + msglen + "  wholeByte: " + wholeByte + "  bitRemain: " + bitRemain);
+//        System.out.println("\n\nhashbitlen: " + hashbitlen + "  msglen: " + msglen + "  wholeByte: " + wholeByte + "  bitRemain: " + bitRemain);
+        log.info("\n\nhashbitlen: " + hashbitlen + "  msglen: " + msglen + "  wholeByte: " + wholeByte + "  bitRemain: " + bitRemain + "\n");
+
         System.arraycopy(msg, 0, newMsg, 0, wholeByte);
         newMsg[wholeByte] = ZerroFill(msg[wholeByte], bitRemain);
 //        System.out.print("newMsg[wholeByte]: " + newMsg[wholeByte]);
-        System.out.print("\nOriginal Array: ");
-        for (int x : msg) {
-            System.out.print(x + " ");
-        }
-        System.out.print("\nNew Array:      ");
+//        System.out.print("\nOriginal Array: ");
+//        log.fine("\nOriginal Array: ");
+//        for (int x : msg) {
+//            System.out.print(x + " ");
+//        }
+//        System.out.println("\nNew Array:      ");
         for (int y : newMsg) {
-            System.out.print(y + " ");
+//            System.out.print(y + " ");
+            log.info(y + " ");
         }
         for (int i = 0; i < 256; i++) {
             if (newMsg[i] - msg[i] < 0) System.err.print(newMsg[i] - msg[i] + " ");

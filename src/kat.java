@@ -1,4 +1,10 @@
+import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
+
+import java.io.File;
+
 public class kat {
+    private static final Logger log = Logger.getLogger(kat.class.getName());
     public kat() {
         STATUS_CODES ret_val;
         int bitlens[] = {224, 256, 384, 512};
@@ -23,11 +29,11 @@ public class kat {
         ioFile io = new ioFile();
         String fileName = String.format("ShortMsgKAT_%d.txt", hashbitlen);
 
-        if (!io.setPathRead("d:\\Java\\KAT-master\\input\\ShortMsgKAT.txt")) {
+        if (!io.setPathRead("F:\\Java\\KAT-master\\input\\ShortMsgKAT.txt")) {
             return STATUS_CODES.KAT_FILE_OPEN_ERROR;
         }
 
-        if (!io.setPathWrite("d:\\Java\\KAT-master\\output\\" + fileName)) {
+        if (!io.setPathWrite("F:\\Java\\KAT-master\\output\\" + fileName)) {
             return STATUS_CODES.KAT_FILE_OPEN_ERROR;
         }
 
@@ -142,8 +148,15 @@ public class kat {
     }
 
     public static void main(String[] args) {
-        System.err.println("=== Start ===================================");
+
+        File f = new File("Diser.log");
+        f.delete();
+        PropertyConfigurator.configure("./src/newproperties.properties");
+
+//        System.err.println("=== Start ===================================");
+        log.info("=== Start ===================================");
         new kat();
-        System.err.println("=== Done ====================================");
+//        System.err.println("=== Done ====================================");
+        log.info("\n\n=== Done ====================================\n");
     }
 }
