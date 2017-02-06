@@ -2,10 +2,11 @@ import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
 import java.io.File;
+import java.io.IOException;
 
 public class kat {
     private static final Logger log = Logger.getLogger(kat.class.getName());
-    public kat() {
+    public kat() throws IOException {
         STATUS_CODES ret_val;
         int bitlens[] = {224, 256, 384, 512};
 
@@ -19,7 +20,7 @@ public class kat {
 //            System.out.println(ret_val + " <" + ret_val.getCode() + ">");
     }
 
-    private STATUS_CODES genShortMsg(int hashbitlen) {
+    private STATUS_CODES genShortMsg(int hashbitlen) throws IOException {
         algorithm algorithm = new algorithm();
         String line = null;
         int Msg[] = new int[256];
@@ -86,7 +87,7 @@ public class kat {
         return STATUS_CODES.KAT_SUCCESS;
     }
 
-    private STATUS_CODES genLongMsg(int hashbitlen) {
+    private STATUS_CODES genLongMsg(int hashbitlen) throws IOException {
         algorithm algorithm = new algorithm();
         String line = null;
         int Msg[] = new int[4288];
@@ -147,14 +148,14 @@ public class kat {
         return STATUS_CODES.KAT_SUCCESS;
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 
         File f = new File("Diser.log");
         f.delete();
         PropertyConfigurator.configure("./src/newproperties.properties");
 
 //        System.err.println("=== Start ===================================");
-        log.info("=== Start ===================================");
+        log.info("=== Start ===================================\n\n");
         new kat();
 //        System.err.println("=== Done ====================================");
         log.info("\n\n=== Done ====================================\n");
