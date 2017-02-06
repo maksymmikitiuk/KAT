@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 public class kat {
     public kat() {
         STATUS_CODES ret_val;
@@ -61,10 +63,15 @@ public class kat {
                 return STATUS_CODES.KAT_DATA_ERROR;
             }
 
-            for (int x: Msg) {
-                System.out.print(x + " ");
-            }
-            System.out.println("\n");
+//            for (int x: Msg) {
+//                System.out.print(x + " ");
+//            }
+//            System.out.println("\n");
+//            try {
+//                Thread.sleep(1000);
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
 
             //HASH
             MD = algorithm.Hash(hashbitlen, Integer.valueOf(line), this);
@@ -135,6 +142,137 @@ public class kat {
             io.writeBToFile("MD = ", MD, hashbitlen / 8);
         } while (!done);
         System.out.println(String.format("finished ShortMsgKAT for <%d>\n", hashbitlen));
+
+        io.closeFiles();
+
+        return STATUS_CODES.KAT_SUCCESS;
+    }
+
+    private STATUS_CODES genExtremelyLongMsg(int hashbitlen) {
+        algorithm algorithm = new algorithm();
+        String line = null, Text = null;
+        int Msg[] = new int[4288];
+        int MD[] = new int[64];
+        int repeat = 0;
+        STATUS_CODES retval, state = null;
+        ioFile io = new ioFile();
+        String fileName = String.format("ExtremelyLongMsgKAT_%d.txt", hashbitlen);
+
+        if (!io.setPathRead("F:\\Java\\KAT-master\\input\\ExtremelyLongMsgKAT.txt")) {
+            return STATUS_CODES.KAT_FILE_OPEN_ERROR;
+        }
+
+        if (!io.setPathWrite("F:\\Java\\KAT-master\\output\\" + fileName)) {
+            return STATUS_CODES.KAT_FILE_OPEN_ERROR;
+        }
+
+        io.writeToFile("# %s\n", fileName);
+        if ((line = io.find("# Algorithm Name:")) != null) {
+            io.writeToFile("# Algorithm Name:%s\n", line);
+        } else {
+            System.out.println("genExtremelyLongMsg: Couldn't read Algorithm Name\n");
+            return STATUS_CODES.KAT_HEADER_ERROR;
+        }
+
+        if ((line = io.find("# Principal Submitter:")) != null) {
+            io.writeToFile("# Principal Submitter:%s\n", line);
+        } else {
+            System.out.println("genExtremelyLongMsg: Couldn't read Principal Submitter\n");
+            return STATUS_CODES.KAT_HEADER_ERROR;
+        }
+
+        if ((repeat = Integer.parseInt(io.find("Repeat = "))) != 0) {
+            System.out.println("ERROR: unable to read 'Repeat' from <ExtremelyLongMsgKAT.txt>");
+            return STATUS_CODES.KAT_DATA_ERROR;
+        }
+
+        if ((repeat = Integer.parseInt(io.find("Text = "))) != 0) {
+            System.out.println("ERROR: unable to read 'Text' from <ExtremelyLongMsgKAT.txt>");
+            return STATUS_CODES.KAT_DATA_ERROR;
+        }
+
+        Text = Arrays.copyOf("abcdefghbcdefghicdefghijdefghijkefghijklfghijklmghijklmnhijklmno", 64);
+
+        if ((retval = algorithm.Init(STATUS_CODES.KAT_DATA_ERROR, hashbitlen)) != STATUS_CODES.KAT_SUCCESS) {
+            System.out.printf("Init  returned <%d> in genExtremelyLongMsg\n", retval.getCode());
+            return STATUS_CODES.KAT_HASH_ERROR;
+        }
+
+        for (int i = 0; i < repeat; i++)
+            if ((retval = algorithm.Update(state, Text, 512)) != STATUS_CODES.KAT_SUCCESS) {
+                System.out.printf("Update returned <%d> in genExtremelyLongMsg\n", retval.getCode());
+                return STATUS_CODES.KAT_HASH_ERROR;
+            }
+
+        if ((retval = algorithm.Final(state, MD)) != STATUS_CODES.KAT_SUCCESS) {
+            System.out.printf("Final returned <%d> in genExtremelyLongMsg\n", retval.getCode());
+            return STATUS_CODES.KAT_HASH_ERROR;
+        }
+
+        io.writeToFile("Repeat = %d\n", repeat);
+        io.writeToFile("Text = %s\n", Text);
+        io.writeBToFile("MD = ", MD, hashbitlen / 8);
+        System.out.printf("finished ExtremelyLongMsgKAT for <%d>\n", hashbitlen);
+
+        io.closeFiles();
+
+        return STATUS_CODES.KAT_SUCCESS;
+    }
+
+    private STATUS_CODES genMonteCarlo(int hashbitlen){
+        String line = null;
+        int Msg[] = new int[128];
+        int MD[] = new int[64];
+        int Temp[] = new int[128];
+        int Seed[] = new int[128];
+        int bytelen;
+        ioFile io = new ioFile();
+        String fileName = String.format("MonteCarlo__%d.txt", hashbitlen);
+
+        if (!io.setPathRead("F:\\Java\\KAT-master\\input\\MonteCarlo.txt")) {
+            return STATUS_CODES.KAT_FILE_OPEN_ERROR;
+        }
+
+        if (!io.setPathWrite("F:\\Java\\KAT-master\\output\\" + fileName)) {
+            return STATUS_CODES.KAT_FILE_OPEN_ERROR;
+        }
+
+        io.writeToFile("# %s\n", fileName);
+        if ((line = io.find("# Algorithm Name:")) != null) {
+            io.writeToFile("# Algorithm Name:%s\n", line);
+        } else {
+            System.out.println("genMonteCarlo: Couldn't read Algorithm Name\n");
+            return STATUS_CODES.KAT_HEADER_ERROR;
+        }
+
+        if ((line = io.find("# Principal Submitter:")) != null) {
+            io.writeToFile("# Principal Submitter:%s\n", line);
+        } else {
+            System.out.println("genMonteCarlo: Couldn't read Principal Submitter\n");
+            return STATUS_CODES.KAT_HEADER_ERROR;
+        }
+
+        Seed = io.ReadHEX(128, 128, "Seed = ");
+        if (Msg.length == 0 || Msg == null) {
+            System.out.println("ERROR: unable to read 'Seed' from <MonteCarlo.txt>");
+            return STATUS_CODES.KAT_DATA_ERROR;
+        }
+
+        bytelen = hashbitlen / 8;
+        Msg = Arrays.copyOf(Seed, 128);
+        io.writeBToFile("Seed = ", Seed, 128);
+        for (int j=0; j<100; j++ ) {
+            for (int i=0; i<1000; i++ ) {
+                MD = algorithm.Hash(hashbitlen, 1024, this);
+                Temp = Arrays.copyOf(Msg, 128 - bytelen);
+                Msg = Arrays.copyOf(MD, bytelen);
+                Msg+bytelen = Arrays.copyOf(Temp, 128 - bytelen);
+            }
+            io.writeToFile("\nj = %d\n", j);
+            io.writeBToFile("MD = ", MD, bytelen);
+        }
+
+        System.out.println(String.format("finished MonteCarloKAT for <%d>\n", hashbitlen));
 
         io.closeFiles();
 

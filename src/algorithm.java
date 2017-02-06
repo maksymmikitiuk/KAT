@@ -1,5 +1,3 @@
-import java.util.BitSet;
-
 public class algorithm {
 
     int Msg[] = new int[256];
@@ -23,4 +21,15 @@ public class algorithm {
         return masked_value;
     }
 
+    public STATUS_CODES Init(STATUS_CODES state, int hashbitlen){
+        return STATUS_CODES.KAT_SUCCESS;
+    }
+
+    public STATUS_CODES Update(STATUS_CODES state, String Text, int len) {
+        return state;
+    }
+
+    public STATUS_CODES Final(STATUS_CODES state, int[] md) {
+        return state;
+    }
 }
