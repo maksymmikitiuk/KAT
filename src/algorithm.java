@@ -350,6 +350,7 @@ public class algorithm {
             //log.info(String.format("S_new[%c]:%d%n",i, S[i]));
             pos++;
         }
+    }
     
 
     public void inputDataFile() throws IOException {
