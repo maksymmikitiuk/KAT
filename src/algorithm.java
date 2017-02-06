@@ -1,3 +1,4 @@
+
 import org.apache.log4j.*;
 
 import java.io.FileInputStream;
@@ -181,7 +182,7 @@ public class algorithm {
     public static void moveLeft(long[] array, int positions) {
         int size = array.length;
         for (int i = 0; i < positions; i++)
-        {
+        { 
             long temp = array[0];
             for (int j = 1; j < size; j++)
             {
@@ -335,7 +336,7 @@ public class algorithm {
 
     public void clearArray(long mas[]){
         for(int i = 0; i < mas.length; i++) mas[i] = 0;
-    }
+ 
 
     public void inputDataMemory(int mas[]){
         log.info(String.format("%nВхідна послідовність:%n%n"));
@@ -349,7 +350,7 @@ public class algorithm {
             //log.info(String.format("S_new[%c]:%d%n",i, S[i]));
             pos++;
         }
-    }
+    
 
     public void inputDataFile() throws IOException {
         String inFile = "data.txt";
@@ -369,4 +370,16 @@ public class algorithm {
             pos++;
         }
     }
+
+    public int ZerroFill(int value, int bitlen){
+        String repeated_1 = new String(new char[bitlen]).replace("\0", "1");
+        String repeated_0 = new String(new char[8-bitlen]).replace("\0", "0");
+        String mask = repeated_1 + repeated_0;
+        int m = Integer.parseInt(mask, 2);
+        System.out.println("m: " + m);
+        int masked_value = value & m;
+        System.out.println("masked_value: " + masked_value);
+        return value;
+    }
+
 }
