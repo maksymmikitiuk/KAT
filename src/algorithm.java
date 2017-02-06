@@ -132,7 +132,7 @@ public class algorithm {
             msg[j] = (int) SumCarry[1][j];
             str += (Long.toHexString(SumCarry[1][j]) + " ");
         }
-        log.info(String.format("%nHASH hex:%n%n%s%n", str));
+        log.info(String.format("%nHASH hex:%n%n%s%n%n", str));
 
         return msg;
     }
